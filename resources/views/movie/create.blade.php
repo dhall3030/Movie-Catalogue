@@ -30,31 +30,54 @@
 
 	<h3>Create Movie:</h3>
 
-	<p><a href ="{{ App::make('url')->to('/') }}">Back</a></p>
+		<div class="input-container">
 
-	{!! Form::open(array('route' => 'create-movie' , 'name' => 'MovieForm')) !!}
-	
-	<p>{!! Form::label('name', 'Name:')!!}<br>{!! Form::text('name') !!}</p>
-	<p>{!! Form::label('year', 'Year:')!!}<br>{!! Form::text('year') !!}</p>
-	<p>{!! Form::label('category_id', 'Category:')!!} {!! Form::select('category_id', $categories) !!}</p>
-	<p>{!! Form::label('description', 'Description:')!!}<br>{!! Form::textarea('description') !!}</p>
-	
-	
-	<p>Tags:</p>
-	@foreach ($tags as $tag)
+			<p><a href ="{{ App::make('url')->to('/') }}">Back</a></p>
 
-		
-		{!!Form::checkbox('tags[]', $tag->tag_id,false,['id' => $tag->name])!!}{!! Form::label($tag->name, $tag->name)!!}
+			{!! Form::open(array('route' => 'create-movie' , 'name' => 'MovieForm')) !!}
+			
+			<div class="input">
+				{!! Form::label('name', 'Name:')!!}<br>{!! Form::text('name') !!}
+			</div>
+			
+			<div class="input">
+				{!! Form::label('year', 'Year:')!!}<br>{!! Form::text('year') !!}
+			</div>
+			
+			<div class="input">
+				{!! Form::label('category_id', 'Category:')!!} {!! Form::select('category_id', $categories) !!}
+			</div>
+			
+			<div class="input">
+				{!! Form::label('description', 'Description:')!!}<br>{!! Form::textarea('description') !!}
+			</div>
+			
+			<div>
+			<p>Tags:</p>
+
+				<ul>
+				@foreach ($tags as $tag)
+
+					
+					<li>
+					{!!Form::checkbox('tags[]', $tag->tag_id,false,['id' => $tag->name])!!}{!! Form::label($tag->name, $tag->name)!!}
+				    </li>
 
 
-		
-		
-	@endforeach
+					
+					
+				@endforeach
+				</ul>	
+		    </div>
 
 
-	
-	<p>{!! Form::submit('Submit') !!}</p>
-	{!! Form::close() !!}
+			
+			<div class="input">
+			{!! Form::submit('Submit') !!}
+		    </div>
+			{!! Form::close() !!}
+
+		</div>
 
 
 	</div>

@@ -25,8 +25,10 @@
 	
 	@foreach ($movies as $movie)
 
-	<p><strog>Name:</strog> {{$movie->name}} - <strong>Year:</strong> {{$movie->year}} - <a href ="{{ App::make('url')->to('/') }}/edit-movie/{{$movie->movie_id}}">Edit Movie</a> </p>
+	<p><strog>Name:</strog> {{$movie->name}} - <strong>Year:</strong> {{$movie->year}} - <a href ="{{ App::make('url')->to('/') }}/edit-movie/{{$movie->movie_id}}">Edit Movie</a>-<a href ="{{ App::make('url')->to('/') }}/delete-movie/{{$movie->movie_id}}">Delete Movie</a>  </p>
 		
+		<!-- {{$movie->images}} -->
+
 		@foreach ($movie->tags as $tag)
 
 		{{$tag->tag->name}},

@@ -14,6 +14,15 @@
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+
+
+Route::get('/upload', function () {
+    return view('upload.upload');
+});
+
+Route::post('upload', ['as' => 'upload-file', 'uses' =>'ImageUploadController@store']);
+
+
 Route::get('/', 'MovieController@index');
 
 //Route::get('movies', 'MovieController@index');
@@ -24,4 +33,7 @@ Route::post('create-movie', ['as' => 'create-movie', 'uses' =>'MovieController@s
 
 Route::get('edit-movie/{movie_id}', 'MovieController@edit');
 Route::post('edit-movie/{movie_id}', ['as' => 'edit-movie', 'uses' =>'MovieController@update']);
+
+
+Route::get('delete-movie/{movie_id}', 'MovieController@destroy');
 

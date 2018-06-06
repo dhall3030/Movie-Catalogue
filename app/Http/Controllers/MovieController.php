@@ -6,6 +6,7 @@ use App\Movie;
 use App\Category;
 use App\Tag;
 use App\Tag_Detail;
+use App\Helpers\UploadHelper;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\MessageBag;
@@ -39,7 +40,7 @@ class MovieController extends Controller
 
         $tags = Tag::all();
         
-        return view('movie.create', ['categories' => $categories,'tags' => $tags ]);
+        return view('movie.create', compact('categories' ,'tags'));
     }
 
     /**
@@ -124,7 +125,10 @@ class MovieController extends Controller
 
         $tags = Tag::all();
 
-        return view('movie.edit' , ['movie' => $movie, 'categories'=>$categories,'tags' => $tags]);
+        //return view('movie.edit' , ['movie' => $movie, 'categories'=>$categories,'tags' => $tags]);
+    
+        return view('movie.edit' , compact('movie', 'categories' ,'tags'));
+
     }
 
     /**
@@ -188,6 +192,12 @@ class MovieController extends Controller
                 
             }
 
+            if($request->user_file != null){
+
+            UploadHelper::uploadImage($request->user_file, $movie_id);
+
+            }
+
             return Redirect::to('/')->withFlashMessage('Movie Created Successfully.');
         }
     }
@@ -198,8 +208,18 @@ class MovieController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($movie_id)
     {
-        //
+        
+        
+        $movie = Movie::find($movie_id);
+
+        $movie->images()->delete();
+
+        $movie->delete();
+
+        //$deletedRows = Movie::where('movie_id', $movie_id)->delete();
+        
+        return Redirect::to('/')->withFlashMessage('Movie Deleted Successfully.');
     }
 }

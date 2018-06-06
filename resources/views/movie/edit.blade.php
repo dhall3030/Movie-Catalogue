@@ -30,60 +30,81 @@
 
 	<h3>Edit Movie:</h3>
 
-	<p><a href ="{{ App::make('url')->to('/') }}">Back</a></p>
+		<div class="input-container">
 
-	{!! Form::open(array('route' => array( 'edit-movie' ,$movie->movie_id) , 'name' =>'MovieForm')) !!}
-	
-	
-	<p>{!! Form::label('name', 'Name:')!!}<br>{!! Form::text('name',$movie->name) !!}</p>
-	<p>{!! Form::label('year', 'Year:')!!}<br>{!! Form::text('year',$movie->year) !!}</p>
-	<p>{!! Form::label('category_id', 'Category:')!!} {!! Form::select('category_id', $categories, $movie->category_id) !!}</p>
-	<p>{!! Form::label('description', 'Description:')!!}<br>{!! Form::textarea('description',$movie->description) !!}</p>
-	
-	<?php 
-		
-		$movie_tags = array();
+			<p><a href ="{{ App::make('url')->to('/') }}">Back</a></p>
 
-		$i = 0;
-
-		foreach ($movie->tags as $tag) {
-
-			$movie_tags[$i] = $tag->tag->name;
-
-			$i++;
-		}
-
-		//var_dump($movie_tags);
-
-	?>
- 	
-
- 	<p>Tags:</p>
-
-	@foreach ($tags as $tag)
-
-		 
-			<?php  $checked = false; ?>
+			{!! Form::open(array('route' => array( 'edit-movie' ,$movie->movie_id) ,'files' => true , 'name' =>'MovieForm')) !!}
 			
-			@if(in_array($tag->name, $movie_tags))
-
-			<?php  $checked = true; ?>
 			
-			@endif
+			<div class="input">
+				{!! Form::label('name', 'Name:')!!}<br>{!! Form::text('name',$movie->name) !!}
+			</div>
+			<div class="input">
+				{!! Form::label('year', 'Year:')!!}<br>{!! Form::text('year',$movie->year) !!}
+			</div>
+			<div class="input">
+				{!! Form::label('category_id', 'Category:')!!} {!! Form::select('category_id', $categories, $movie->category_id) !!}
+			</div>
+			<div class="input">
+				{!! Form::label('description', 'Description:')!!}<br>{!! Form::textarea('description',$movie->description) !!}
+			</div>
+			
+			<?php 
+				
+				$movie_tags = array();
 
-		
+				$i = 0;
 
-		{!!Form::checkbox('tags[]', $tag->tag_id,$checked,['id' => $tag->name])!!}{!! Form::label($tag->name, $tag->name)!!}
+				foreach ($movie->tags as $tag) {
+
+					$movie_tags[$i] = $tag->tag->name;
+
+					$i++;
+				}
+
+				//var_dump($movie_tags);
+
+			?>
+		 	
+			<div>
+		 	<p>Tags:</p>
+
+			 	<ul>
+
+				@foreach ($tags as $tag)
+
+					 
+						<?php  $checked = false; ?>
+						
+						@if(in_array($tag->name, $movie_tags))
+
+						<?php  $checked = true; ?>
+						
+						@endif
+
+					
+
+					<li>{!!Form::checkbox('tags[]', $tag->tag_id,$checked,['id' => $tag->name])!!}{!! Form::label($tag->name, $tag->name)!!}</li>
 
 
-		
-		
-	@endforeach
+					
+					
+				@endforeach
+				</ul>
+			</div>
 
 
-	
-	<p>{!! Form::submit('Submit') !!}</p>
-	{!! Form::close() !!}
+			{{Form::label('user_file', 'Upload Image',['class' => 'control-label'])}}
+			{{Form::file('user_file')}}
+
+			<div class="input">
+			<p>{!! Form::submit('Submit') !!}</p>
+			{!! Form::close() !!}
+			</div>
+
+
+		</div>
 
 
 	</div>

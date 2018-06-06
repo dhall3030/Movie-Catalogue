@@ -22,4 +22,11 @@ class Movie extends Model
     return $this->hasMany('App\Tag_Detail','movie_id', 'movie_id');
 	
 	}
+
+    public function images()
+    {
+    return $this->morphMany('App\Image', 'record');
+    }
+
+
 }

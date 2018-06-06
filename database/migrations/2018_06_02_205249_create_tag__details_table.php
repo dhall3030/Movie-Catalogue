@@ -17,9 +17,9 @@ class CreateTagDetailsTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('tag_detail_id');
             $table->integer('tag_id')->unsigned()->index();
-            $table->foreign('tag_id')->references('tag_id')->on('tags');
+            $table->foreign('tag_id')->references('tag_id')->on('tags')->onDelete('cascade');
             $table->integer('movie_id')->unsigned()->index();
-            $table->foreign('movie_id')->references('movie_id')->on('movies');
+            $table->foreign('movie_id')->references('movie_id')->on('movies')->onDelete('cascade');
             
             //$table->timestamps();
         });
