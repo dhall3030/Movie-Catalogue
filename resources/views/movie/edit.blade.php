@@ -52,16 +52,16 @@
 			
 			<?php 
 				
-				$movie_tags = array();
+				// $movie_tags = array();
 
-				$i = 0;
+				// $i = 0;
 
-				foreach ($movie->tags as $tag) {
+				// foreach ($movie->tags as $tag) {
 
-					$movie_tags[$i] = $tag->tag->name;
+				// 	$movie_tags[$i] = $tag->tag->name;
 
-					$i++;
-				}
+				// 	$i++;
+				// }
 
 				//var_dump($movie_tags);
 
@@ -77,7 +77,7 @@
 					 
 						<?php  $checked = false; ?>
 						
-						@if(in_array($tag->name, $movie_tags))
+						@if(in_array($tag->name, $selectedTags))
 
 						<?php  $checked = true; ?>
 						
@@ -102,7 +102,25 @@
 			<p>{!! Form::submit('Submit') !!}</p>
 			{!! Form::close() !!}
 			</div>
+			
+			
 
+
+
+			@if (!is_null($movie->images->first()))
+
+			<img src="{{ asset('storage/'.$movie->images->first()->image_name)}}">	
+
+			@endif
+
+		
+			@foreach ($movie->images as $image)
+
+				<img src="{{ asset('storage/'.$image->image_name)}}">
+
+			@endforeach
+
+						{{asset('storage/1528252188.jpg')}}
 
 		</div>
 

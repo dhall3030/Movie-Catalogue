@@ -7,10 +7,12 @@ use App\Category;
 use App\Tag;
 use App\Tag_Detail;
 use App\Helpers\UploadHelper;
+use App\Helpers\TagHelper;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\MessageBag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class MovieController extends Controller
 {
@@ -125,9 +127,12 @@ class MovieController extends Controller
 
         $tags = Tag::all();
 
+        //get selected tags and maintain state.
+        $selectedTags = TagHelper::getTags($movie->tags);
+
         //return view('movie.edit' , ['movie' => $movie, 'categories'=>$categories,'tags' => $tags]);
     
-        return view('movie.edit' , compact('movie', 'categories' ,'tags'));
+        return view('movie.edit' , compact('movie', 'categories' ,'tags','selectedTags'));
 
     }
 
@@ -211,8 +216,43 @@ class MovieController extends Controller
     public function destroy($movie_id)
     {
         
+        //$delete =Storage::delete('1528675315.jpg');
         
+
+
         $movie = Movie::find($movie_id);
+
+        $i = 0;
+
+        $file_names = array();
+        
+        
+
+        foreach ($movie->images as $image) {    
+
+               
+                //Storage::delete('public/uploads/'.$image->image_name);
+
+                Storage::delete($image->image_name);
+
+                $file_names[$i] = $image->image_name;
+
+                $i++;
+
+
+
+         
+
+        }
+
+        $delete =Storage::disk('public')->delete($file_names); 
+        //var_dump($delete);
+
+         
+
+
+        //die();
+
 
         $movie->images()->delete();
 

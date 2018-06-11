@@ -15,12 +15,15 @@ class UploadHelper extends Facade
 
 
 		
-		$fileName = time().'.'.$image->getClientOriginalExtension();
+		// $fileName = time().'.'.$image->getClientOriginalExtension();
 
-  		$image->move(public_path('uploads'), $fileName);
+  // 	$image->move(public_path('storage'), $fileName);
 
+  		$path = $image->store('public');
   		
-  		$movie = Movie::find($movie_id);
+      $fileName =basename($path);
+      
+      $movie = Movie::find($movie_id);
 
   		$image = new Image();
 
