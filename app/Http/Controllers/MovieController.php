@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\MessageBag;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+
 
 class MovieController extends Controller
 {
@@ -93,6 +93,13 @@ class MovieController extends Controller
                 $tag->tag_id = $request->tags[$x];
                 $tag->save();
                 
+            }
+
+
+            if($request->user_file != null){
+
+            UploadHelper::uploadImage($request->user_file, $movie->movie_id);
+
             }
 
             return Redirect::to('/')->withFlashMessage('Movie Created Successfully.');
@@ -216,45 +223,18 @@ class MovieController extends Controller
     public function destroy($movie_id)
     {
         
-        //$delete =Storage::delete('1528675315.jpg');
+        
         
 
 
         $movie = Movie::find($movie_id);
-
-        $i = 0;
-
-        $file_names = array();
         
-        
-
-        foreach ($movie->images as $image) {    
-
-               
-                //Storage::delete('public/uploads/'.$image->image_name);
-
-                Storage::delete($image->image_name);
-
-                $file_names[$i] = $image->image_name;
-
-                $i++;
-
-
-
-         
-
-        }
-
-        $delete =Storage::disk('public')->delete($file_names); 
-        //var_dump($delete);
-
-         
-
-
-        //die();
-
+        UploadHelper::deleteImages($movie->images);
 
         $movie->images()->delete();
+         
+        //var_dump($delete);
+        //die();
 
         $movie->delete();
 

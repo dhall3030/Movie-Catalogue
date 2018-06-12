@@ -96,7 +96,7 @@
 
 
 			{{Form::label('user_file', 'Upload Image',['class' => 'control-label'])}}
-			{{Form::file('user_file')}}
+			{{Form::file('user_file[]',array('multiple'=>true))}}
 
 			<div class="input">
 			<p>{!! Form::submit('Submit') !!}</p>

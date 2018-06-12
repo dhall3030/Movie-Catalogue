@@ -34,7 +34,7 @@
 
 			<p><a href ="{{ App::make('url')->to('/') }}">Back</a></p>
 
-			{!! Form::open(array('route' => 'create-movie' , 'name' => 'MovieForm')) !!}
+			{!! Form::open(array('route' => 'create-movie' ,'files' => true  , 'name' => 'MovieForm')) !!}
 			
 			<div class="input">
 				{!! Form::label('name', 'Name:')!!}<br>{!! Form::text('name') !!}
@@ -71,7 +71,12 @@
 		    </div>
 
 
+			{{Form::label('user_file', 'Upload Image',['class' => 'control-label'])}}
+			{{Form::file('user_file[]',array('multiple'=>true))}}
 			
+
+
+
 			<div class="input">
 			{!! Form::submit('Submit') !!}
 		    </div>
