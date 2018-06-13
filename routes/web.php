@@ -16,9 +16,20 @@
 // });
 
 
+Route::get('laravel-version', function()
+{
+$laravel = app();
+return "Your Laravel version is ".$laravel::VERSION;
+});
+
+
+
 Route::get('/upload', function () {
     return view('upload.upload');
 });
+
+
+
 
 Route::post('upload', ['as' => 'upload-file', 'uses' =>'ImageUploadController@store']);
 

@@ -18,6 +18,7 @@ class CreateImagesTable extends Migration
             $table->integer('record_id');
             $table->string('record_type');
             $table->string('image_name');
+            $table->boolean('primary_image')->default(false);
             $table->timestamps();
         
         });

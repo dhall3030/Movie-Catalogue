@@ -107,9 +107,14 @@
 
 
 
-			@if (!is_null($movie->images->first()))
+			@if (!is_null($primary_image))
 
-			<img src="{{ asset('storage/'.$movie->images->first()->image_name)}}">	
+
+			
+
+			<!-- <img src="{{ asset('storage/'.$movie->images->first()->image_name)}}">	 -->
+
+			<img src="{{ asset('storage/'.$primary_image)}}">	
 
 			@endif
 
@@ -120,7 +125,7 @@
 
 			@endforeach
 
-						{{asset('storage/1528252188.jpg')}}
+						
 
 		</div>
 

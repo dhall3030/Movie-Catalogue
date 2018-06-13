@@ -15,9 +15,9 @@ class ImageUploadController extends Controller
     UploadHelper::uploadImage($request->user_file,1);
 
 
-  // $fileName = time().'.'.$request->user_file->getClientOriginalExtension();
+  $fileName = time().'.'.$request->user_file->getClientOriginalExtension();
 
-  // $request->user_file->move(public_path('uploads'), $fileName);
+  $request->user_file->move(public_path('uploads'), $fileName);
 
   }
 }

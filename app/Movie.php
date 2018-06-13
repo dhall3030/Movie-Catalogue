@@ -28,5 +28,7 @@ class Movie extends Model
     return $this->morphMany('App\Image', 'record');
     }
 
+   
+
 
 }

@@ -130,6 +130,16 @@ class MovieController extends Controller
          
         $movie = Movie::find($movie_id);
 
+        if(@!is_null($movie->images()->where('primary_image',true)->first()->image_name)){
+
+        $primary_image = $movie->images()->where('primary_image',true)->first()->image_name; 
+
+        } else {
+
+        $primary_image = NULL; 
+
+        }
+
         $categories = Category::pluck('name', 'category_id');
 
         $tags = Tag::all();
@@ -139,7 +149,7 @@ class MovieController extends Controller
 
         //return view('movie.edit' , ['movie' => $movie, 'categories'=>$categories,'tags' => $tags]);
     
-        return view('movie.edit' , compact('movie', 'categories' ,'tags','selectedTags'));
+        return view('movie.edit' , compact('movie', 'categories' ,'tags','selectedTags','primary_image'));
 
     }
 
