@@ -28,6 +28,12 @@ class Movie extends Model
     return $this->morphMany('App\Image', 'record');
     }
 
+
+    public function primaryImage()
+    {
+    return $this->morphMany('App\Image', 'record')->where('primary_image',true)->first();
+    }
+
    
 
 

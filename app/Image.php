@@ -6,7 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model
 {
-    protected $fillable = [];
+   
+
+	protected $table = 'images';
+    
+    public $primaryKey ='image_id';
+
+   	protected $fillable = [];
 
 
     public function record()
@@ -14,7 +20,7 @@ class Image extends Model
       return $this->morphTo();
     }
 
-    
+
 
 
 

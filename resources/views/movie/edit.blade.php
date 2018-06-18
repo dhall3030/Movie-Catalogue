@@ -105,23 +105,28 @@
 			
 			
 
+			<?php $primary_image = $movie->primaryImage();?> 	
+
+			@if (!is_null($primary_image)) 
 
 
-			@if (!is_null($primary_image))
+			<p>Primary image</p>
 
-
-			
-
-			<!-- <img src="{{ asset('storage/'.$movie->images->first()->image_name)}}">	 -->
-
-			<img src="{{ asset('storage/'.$primary_image)}}">	
+			<img src="{{ asset('storage/'.$primary_image['image_name'])}}"> 
 
 			@endif
-
+			
+			<hr>
 		
 			@foreach ($movie->images as $image)
 
 				<img src="{{ asset('storage/'.$image->image_name)}}">
+
+				<p><a href="{{ App::make('url')->to('/') }}/set-primary-image/{{$image->image_id}}">{{(boolval($image->primary_image) ? 'primary' : 'Set to primary') }}</a></p>
+
+				<p><a href="{{ App::make('url')->to('/') }}/delete-image/{{$image->image_id}}">Delete Image</a></p>
+
+				<hr>
 
 			@endforeach
 

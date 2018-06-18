@@ -122,7 +122,7 @@ class MovieController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $movie_id
      * @return \Illuminate\Http\Response
      */
     public function edit($movie_id)
@@ -130,15 +130,15 @@ class MovieController extends Controller
          
         $movie = Movie::find($movie_id);
 
-        if(@!is_null($movie->images()->where('primary_image',true)->first()->image_name)){
+        // if(@!is_null($movie->images()->where('primary_image',true)->first()->image_name)){
 
-        $primary_image = $movie->images()->where('primary_image',true)->first()->image_name; 
+        // $primary_image = $movie->images()->where('primary_image',true)->first()->image_name; 
 
-        } else {
+        // } else {
 
-        $primary_image = NULL; 
+        // $primary_image = NULL; 
 
-        }
+        // }
 
         $categories = Category::pluck('name', 'category_id');
 
@@ -149,7 +149,8 @@ class MovieController extends Controller
 
         //return view('movie.edit' , ['movie' => $movie, 'categories'=>$categories,'tags' => $tags]);
     
-        return view('movie.edit' , compact('movie', 'categories' ,'tags','selectedTags','primary_image'));
+      
+        return view('movie.edit' , compact('movie', 'categories' ,'tags','selectedTags'));
 
     }
 
@@ -157,7 +158,7 @@ class MovieController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $movie_id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $movie_id)
@@ -227,7 +228,7 @@ class MovieController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $movie_id
      * @return \Illuminate\Http\Response
      */
     public function destroy($movie_id)
@@ -239,17 +240,63 @@ class MovieController extends Controller
 
         $movie = Movie::find($movie_id);
         
+        
+        //delete all image files on disk attached to movie record
         UploadHelper::deleteImages($movie->images);
 
+        //delete image file records
         $movie->images()->delete();
          
-        //var_dump($delete);
-        //die();
-
+        //delete movie record
         $movie->delete();
 
-        //$deletedRows = Movie::where('movie_id', $movie_id)->delete();
-        
+        //redirect back to movie page
         return Redirect::to('/')->withFlashMessage('Movie Deleted Successfully.');
     }
+
+    
+
+    /**
+     * Set image to primary.
+     *
+     * @param  int  $image_id
+     * @return Illuminate\Support\Facades\Redirect;
+     */
+
+    public function setPrimaryImage($image_id){
+
+        //set image to primary 
+        $record_id = UploadHelper::setPrimary($image_id);
+
+        //redirect back to movie edit page
+        return Redirect::to('/edit-movie/'.$record_id);
+
+
+
+
+
+
+    }
+    
+    /**
+     * Remove image record and file from storage.
+     *
+     * @param  int  $image_id
+     * @return Illuminate\Support\Facades\Redirect;
+     */
+
+
+    public function removeImage($image_id){
+
+
+        $record_id = UploadHelper::deleteSingleImage($image_id);
+
+
+        return Redirect::to('/edit-movie/'.$record_id)->withFlashMessage('Image Deleted Successfully.');;
+
+
+    }
+
+
+
 }

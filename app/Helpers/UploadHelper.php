@@ -6,12 +6,25 @@ use App\Movie;
 use App\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Facade;
+use Illuminate\Support\Facades\Redirect;
+
+
+ 
 
 class UploadHelper extends Facade 
 {
 
 
-	public static function uploadImage($images,$movie_id){
+	
+  /**
+     * Upload image or multiple images.
+     *
+     * @param  Array of files  $images 
+     * @param  ID of movie the images will belong to. $movie_id
+     * @return \Illuminate\Http\Response
+     */
+
+  public static function uploadImage($images,$movie_id){
 
 
 		
@@ -37,11 +50,16 @@ class UploadHelper extends Facade
 
 	}
 
-
+  /**
+     * Delete all images attached to a record.
+     *
+     * @param  images object  $images
+     * @return true if deletion is successfull
+     */
 
   public static function deleteImages($images){
 
-      
+      //var_dump($images)
 
       $i = 0;
 
@@ -62,6 +80,55 @@ class UploadHelper extends Facade
 
       return $delete;
 
+
+  }
+  
+  /**
+     * Set an uploaded image to be used as primary.
+     *
+     * @param  ID of image  $image_id
+     * @return ID of record the image belongs to.
+     */
+
+
+  public static function setPrimary($image_id){
+
+      //die( $image_id);
+
+      $image = Image::find($image_id);
+
+      $record_id = $image->record_id;
+
+      //die($record_id);
+
+      Image::where('record_id', $record_id)->update(['primary_image' => 0]);
+
+      $image->primary_image = 1;
+
+      $image->save();
+     
+      return $record_id;
+
+    
+
+
+  }
+
+  /**
+     * Delete individual image 
+     *
+     * @param  ID of image  $image_id
+     * @return  ID of record the image belongs to.
+     */
+  public static function deleteSingleImage($image_id){
+
+      $image= Image::find($image_id);
+
+      $deleteImageRecord = $image->delete();
+
+      $deleteFile = Storage::disk('public')->delete($image->image_name);
+
+      return $image->record_id;
 
   }
 

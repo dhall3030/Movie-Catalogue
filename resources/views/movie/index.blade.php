@@ -27,7 +27,17 @@
 
 	<p><strog>Name:</strog> {{$movie->name}} - <strong>Year:</strong> {{$movie->year}} - <a href ="{{ App::make('url')->to('/') }}/edit-movie/{{$movie->movie_id}}">Edit Movie</a>-<a href ="{{ App::make('url')->to('/') }}/delete-movie/{{$movie->movie_id}}">Delete Movie</a>  </p>
 		
-		<!-- {{$movie->images}} -->
+		
+		
+		<?php $primary_image = $movie->primaryImage();?> 
+
+		@if (!is_null($primary_image)) 
+
+		<img style="width: 100px;" src="{{ asset('storage/'.$primary_image['image_name'])}}"> 
+
+		@endif
+
+		<br>
 
 		@foreach ($movie->tags as $tag)
 
