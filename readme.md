@@ -1,6 +1,6 @@
 ## My project's README
 
-This is a simple practice and testing application for cataloging and categorizing movie collections. 
+This is a simple practice and testing Laravel application for cataloging and categorizing movie collections. 
  
 
 

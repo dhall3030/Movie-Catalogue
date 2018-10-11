@@ -54,3 +54,10 @@ Route::get('set-primary-image/{image_id}', 'MovieController@setPrimaryImage');
 Route::get('delete-movie/{movie_id}', 'MovieController@destroy');
 Route::get('delete-image/{image_id}', 'MovieController@removeImage');
 
+
+
+
+//Email 
+
+Route::post('send', 'EmailController@send');
+

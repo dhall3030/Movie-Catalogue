@@ -20,8 +20,8 @@ class UploadHelper extends Facade
      * Upload image or multiple images.
      *
      * @param  Array of files  $images 
-     * @param  ID of movie the images will belong to. $movie_id
-     * @return \Illuminate\Http\Response
+     * @param  int  $movie_id ,ID of movie the images will belong to.
+     * @return 
      */
 
   public static function uploadImage($images,$movie_id){
@@ -53,13 +53,15 @@ class UploadHelper extends Facade
   /**
      * Delete all images attached to a record.
      *
-     * @param  images object  $images
+     * @param object $images
      * @return true if deletion is successfull
      */
 
   public static function deleteImages($images){
 
-      //var_dump($images)
+      // var_dump($images);
+
+      // die();
 
       $i = 0;
 
